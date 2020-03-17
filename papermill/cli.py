@@ -179,6 +179,10 @@ def papermill(
     from stdin and write it out to stdout.
 
     """
+    hvd_rank = os.getenv("OMPI_COMM_WORLD_RANK")
+    if hvd_rank:
+        output_path = output_path + "/" + hvd_rank + ".ipynb"
+
     if INPUT_PIPED and notebook_path and not output_path:
         output_path = notebook_path
         notebook_path = '-'
